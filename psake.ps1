@@ -1,7 +1,6 @@
 #### By Chris Stone <chris.stone@nuwavepartners.com>
 
 Properties {
-
 	$TimeStamp = (Get-Date).ToUniversalTime() | Get-Date -UFormat "%Y%m%d-%H%M%SZ"
 
 	# Find the build folder based on build system
@@ -14,27 +13,21 @@ Properties {
 	If ($ENV:BHCommitMessage -match "!verbose") {
 		$Verbose = @{ Verbose = $True }
 	}
-
 }
 
 TaskSetup {
-
 	Write-Output "".PadRight(70,'-')
-
 }
 
 Task Default -depends Test
 
 Task Init {
-
 	Set-Location $ProjectRoot
 	"Build System Details:"
 	Get-Item ENV:BH*
-
 }
 
 Task Test -depends Init  {
-
 	# Testing links on github requires >= tls 1.2
 	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -68,11 +61,9 @@ Task Test -depends Init  {
 	If ($TestResults.FailedCount -gt 0) {
 		Write-Error "Failed '$($TestResults.FailedCount)' tests, build failed"
 	}
-
 }
 
 Task Build -depends Test {
-
 	Write-Output "Updating Module Manifest:"
 
 	# FunctionsToExport, AliasesToExport; from BuildHelpers
@@ -95,11 +86,9 @@ Task Build -depends Test {
 	Write-Output "`tVersion Build"
 	[Version] $Ver = Get-Metadata -Path $env:BHPSModuleManifest -PropertyName 'ModuleVersion'
 	Update-Metadata -Path $env:BHPSModuleManifest -PropertyName 'ModuleVersion' -Value (@($Ver.Major,$Ver.Minor,$Env:BHBuildNumber) -join '.')
-
 }
 
 Task Deploy -depends Build {
-
 	$Params = @{
 		Path = "$ProjectRoot"
 		Force = $true
@@ -107,5 +96,4 @@ Task Deploy -depends Build {
 	}
 	Write-Output "Invoking PSDeploy"
 	Invoke-PSDeploy @Verbose @Params
-
 }
