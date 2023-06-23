@@ -1,9 +1,3 @@
-#### By Chris Stone <chris.stone@nuwavepartners.com> v0.0.35 2020-06-12T17:04:30.652Z
-
-# Ideas https://www.red-gate.com/simple-talk/sysadmin/powershell/testing-powershell-modules-with-pester/
-#       https://www.burkard.it/2019/08/pester-tests-for-powershell-functions/
-
-# The root directory of your project, adjust as needed
 BeforeAll {
 	$ModuleName = 'Ps-WindowsInstaller'
 	$RootDir = (Get-Location).Path
@@ -65,3 +59,5 @@ Describe "Module Function FIles" {
 	}
 }
 
+# Ideas https://www.red-gate.com/simple-talk/sysadmin/powershell/testing-powershell-modules-with-pester/
+#       https://www.burkard.it/2019/08/pester-tests-for-powershell-functions/

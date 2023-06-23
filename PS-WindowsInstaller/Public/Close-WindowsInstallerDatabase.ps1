@@ -20,7 +20,7 @@ function Close-WindowsInstallerDatabase {
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
-		[string] $Database
+		[System.__ComObject] $Database
 	)
 
 	# TODO Commit should only be called if the DB has been modified, try TablePersistent to check?

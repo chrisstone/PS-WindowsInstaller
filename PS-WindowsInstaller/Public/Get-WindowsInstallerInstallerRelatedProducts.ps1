@@ -41,3 +41,4 @@ function Get-WindowsInstallerInstallerRelatedProduct {
 		}
 	}
 }
+Export-ModuleMember -Function Get-WindowsInstallerInstallerRelatedProduct
