@@ -1,3 +1,15 @@
+enum msiUILevel {
+	msiUILevelNoChange = 0
+	msiUILevelDefault = 1
+	msiUILevelNone = 2
+	msiUILevelBasic = 3
+	msiUILevelReduced = 4
+	msiUILevelFull = 5
+	msiUILevelHideCancel = 32
+	msiUILevelProgressOnly = 64
+	msiUILevelEndDialog = 128
+}
+
 <#
 .SYNOPSIS
    Sets the UILevel of the Windows Installer
@@ -15,8 +27,8 @@ function Set-WindowsInstallerInstallerUILevel {
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true)]
-		[ValidateRange(2, 5)]
-		[int] $UILevel,
+		[ValidateRange(0, 255)]
+		[msiUILevel] $UILevel,
 
 		[Parameter(Mandatory = $true)]
 		[System.__ComObject] $Installer
