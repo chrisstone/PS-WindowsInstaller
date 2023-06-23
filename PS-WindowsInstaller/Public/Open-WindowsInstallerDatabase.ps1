@@ -12,6 +12,9 @@
 .PARAMETER DatabasePath
    The path to the Windows Installer Database (.msi) file. This can be passed by value or from pipeline input.
 
+.OUTPUTS
+	WindowsInstaller.Database object
+
 .EXAMPLE
    Open-WindowsInstallerDatabase -DatabasePath "C:\Path\To\YourDatabase.msi"
 

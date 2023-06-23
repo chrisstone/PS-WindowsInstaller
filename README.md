@@ -14,7 +14,15 @@ Import-Module "C:\Path\To\PS-Installer\PS-Installer.psd1"
 
 ## Basic Usage
 
-### Silently Uninstall 'BadProduct'
+### Install from MSI
+
+```powershell
+
+$PackageSession = Open-WindowsInstallerPackage -PackagePath 'C:\MyInstaller.msi'
+$Return = Invoke-WindowsInstallerSessionAction -Session $PackageSession -Action 'INSTALL'
+```
+
+### Silently Uninstall 'BadProduct' with Logging
 
 ```powershell
 $Installer = New-WindowsInstallerInstaller
