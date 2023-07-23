@@ -21,8 +21,9 @@
 function Set-WindowsInstallerInstallerLog {
 	[CmdletBinding(SupportsShouldProcess = $true)]
 	param (
-		[Parameter(Mandatory = $false)]
-		[string] $LogMode = '',
+		[Parameter(Mandatory = $true)]
+		[ValidateScript({ $r = $true; $_.GetEnumerator() | ForEach-Object { $r -and ('lwefarucmvp+!xo'.ToCharArray() -contains $_) }; $r })]
+		[string] $LogMode,
 
 		[Parameter(Mandatory = $true)]
 		[ValidateScript({ Test-Path $_ -IsValid })]

@@ -18,7 +18,7 @@ function Open-WindowsInstallerPackage {
 	[CmdletBinding()]
 	param (
 		[Parameter(Mandatory = $true)]
-		[ValidateScript({ Test-Path $_ -IsValid })]
+		[ValidateScript({ Test-Path -Path $_ -IsValid })]
 		[string] $PackagePath,
 
 		[Parameter(Mandatory = $false)]
