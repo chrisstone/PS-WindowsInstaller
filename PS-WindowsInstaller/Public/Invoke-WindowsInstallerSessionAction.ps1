@@ -35,7 +35,7 @@ function Invoke-WindowsInstallerSessionAction {
 	[CmdletBinding()]
 	[OutputType([Int32])]
 	param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
 		[System.__ComObject] $Session,
 
 		[Parameter(Mandatory = $true)]
