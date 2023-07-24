@@ -40,3 +40,4 @@ function Test-WindowsInstallerExecuteSequence {
 	}
 	return $false
 }
+Export-ModuleMember -Function Test-WindowsInstallerExecuteSequence
