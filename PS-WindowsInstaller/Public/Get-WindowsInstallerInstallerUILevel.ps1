@@ -8,10 +8,11 @@
 .EXAMPLE
    Get-InstallerUILevel
 #>
-function Get-InstallerUILevel {
+function Get-WindowsInstallerInstallerUILevel {
 	[CmdletBinding()]
+	[OutputType([Int32])]
 	param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
 		[System.__ComObject]	$Installer
 	)
 

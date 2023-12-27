@@ -103,6 +103,8 @@ This example retrieves the Property table from a specified Windows Installer Dat
 #>
 function Get-WindowsInstallerDatabaseTable {
 	[CmdletBinding(DefaultParameterSetName = 'AsArray')]
+	[OutputType([Array], ParameterSetName = 'AsArray')]
+	[OutputType([Hashtable], ParameterSetName = 'AsHashtable')]
 	param (
 		[Parameter(Mandatory = $true)]
 		[System.__ComObject]	$Database,

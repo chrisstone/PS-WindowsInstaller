@@ -30,7 +30,7 @@ function Test-WindowsInstallerPendingReboot {
 			return $true
 		}
 	} catch {
-		Write-Verbose 'Updates key not present'
+		return $false
 	}
 
 	return $false

@@ -16,6 +16,10 @@
 
 .EXAMPLE
    Install-WindowsInstallerInstallerProduct -Installer $Installer -PackagePath "C:\Path\To\YourProduct.msi" -CommandLineOptions "OPTION1=VALUE1 OPTION2=VALUE2"
+
+.NOTES
+   https://learn.microsoft.com/en-us/windows/win32/msi/action
+   https://learn.microsoft.com/en-us/windows/win32/msi/remove
 #>
 function Install-WindowsInstallerInstallerProduct {
 	[CmdletBinding()]
@@ -24,13 +28,11 @@ function Install-WindowsInstallerInstallerProduct {
 		[System.__ComObject]	$Installer = (New-Object -ComObject WindowsInstaller.Installer),
 
 		[Parameter(Mandatory = $true)]
-		[ValidateScript({
-				(Test-Path $_ -IsValid) -and ((Get-Item $_).Extension -eq ".msi")
-			})]
+		[ValidateScript({ (Test-Path $_ -IsValid) -and ((Get-Item $_).Extension -eq ".msi") })]
 		[string]				$PackagePath,
 
 		[Parameter(Mandatory = $false)]
-		[string]				$CommandLineOptions = ""
+		[string[]]				$CommandLineOptions = $null
 	)
 
 	Process {

@@ -14,25 +14,18 @@ Get-WindowsInstallerInstallerRelatedProduct -UpgradeCodes "GUID1","GUID2","GUID3
 #>
 function Get-WindowsInstallerInstallerRelatedProduct {
 	[CmdletBinding()]
+	[OutputType([String[]])]
 	param(
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
 		[ValidatePattern('^(\{[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\})$')]
-		[string[]]				$UpgradeCodes,
+		[string]				$UpgradeCode,
 
 		[Parameter(Mandatory = $false, HelpMessage = 'WindowsInstaller.Installer ComObject')]
 		[System.__ComObject]	$Installer = (New-Object -ComObject WindowsInstaller.Installer)
 	)
 
-	begin {
-		$Products = @()
-	}
-
 	process {
-		foreach ($UpgradeCode in $UpgradeCodes) {
-			$Products += $Installer.GetType().InvokeMember('RelatedProducts', [System.Reflection.BindingFlags]::GetProperty, $null, $Installer, $UpgradeCode)
-		}
-
-		return $Products
+		$Installer.GetType().InvokeMember('RelatedProducts', [System.Reflection.BindingFlags]::GetProperty, $null, $Installer, $UpgradeCode)
 	}
 
 	end {

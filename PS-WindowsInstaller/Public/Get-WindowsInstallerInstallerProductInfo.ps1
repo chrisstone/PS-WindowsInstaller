@@ -20,9 +20,11 @@ PS C:\> '{ABCDEFGHIJK-1234-5678-90AB-CDEF12345678}', '{BCDEFGHIJKL-2345-6789-01B
 #>
 function Get-WindowsInstallerInstallerProductInfo {
 	[CmdletBinding()]
+	[OutputType([Hashtable])]
 	Param(
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
-		[String[]]				$ProductCodes,
+		[ValidatePattern('^(\{[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\})$')]
+		[string]				$ProductCode,
 
 		[Parameter(Mandatory = $false)]
 		[String[]]				$Properties = @('Language', 'ProductName', 'PackageCode', 'Transforms', 'AssignmentType',
@@ -35,17 +37,19 @@ function Get-WindowsInstallerInstallerProductInfo {
 	)
 
 	process {
-		foreach ($Code in $ProductCodes) {
-			$Product = @{
-				ProductCode = $Code
-			}
-
-			foreach ($Property in $Properties) {
-				$Product[$Property] = $Installer.GetType().InvokeMember('ProductInfo', [System.Reflection.BindingFlags]::GetProperty, $null, $Installer, @($Code, $Property))
-			}
-
-			$Product
+		$Return = @{
+			ProductCode = $ProductCode
 		}
+
+		foreach ($Property in $Properties) {
+			Try {
+				$Return[$Property] = $Installer.GetType().InvokeMember('ProductInfo', [System.Reflection.BindingFlags]::GetProperty, $null, $Installer, @($ProductCode, $Property))
+			} Catch {
+				Write-Warning ('Property not found: {0}' -f $Property)
+			}
+		}
+
+		return $Return
 	}
 
 	end {

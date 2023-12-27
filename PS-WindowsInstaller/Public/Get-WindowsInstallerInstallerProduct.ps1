@@ -14,6 +14,7 @@ PS C:\> Get-WindowsInstallerInstallerProduct -Installer $installer
 #>
 function Get-WindowsInstallerInstallerProduct {
 	[CmdletBinding()]
+	[OutputType([String[]])]
 	param(
 		[Parameter(Mandatory = $false, HelpMessage = 'WindowsInstaller.Installer ComObject')]
 		[System.__ComObject]	$Installer = (New-Object -ComObject WindowsInstaller.Installer)

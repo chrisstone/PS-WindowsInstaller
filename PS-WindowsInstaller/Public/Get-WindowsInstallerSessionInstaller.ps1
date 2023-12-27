@@ -13,14 +13,14 @@
 #>
 function Get-WindowsInstallerSessionInstaller {
 	[CmdletBinding()]
+	[OutputType([System.__ComObject])]
 	param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
 		[System.__ComObject] $Session
 	)
 
 	Process {
 		return $Session.GetType().InvokeMember('Installer', [System.Reflection.BindingFlags]::GetProperty, $null, $Session, $null)
 	}
-
 }
 Export-ModuleMember -Function Get-WindowsInstallerSessionInstaller

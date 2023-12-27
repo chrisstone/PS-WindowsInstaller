@@ -16,8 +16,9 @@
 #>
 function Get-WindowsInstallerSessionProperty {
 	[CmdletBinding()]
+	[OutputType([String])]
 	param (
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
 		[System.__ComObject]		$Session,
 
 		[Parameter(Mandatory = $true)]
@@ -27,6 +28,5 @@ function Get-WindowsInstallerSessionProperty {
 	Process {
 		return $Session.GetType().InvokeMember('Property', [System.Reflection.BindingFlags]::GetProperty, $null, $Session, $PropertyName)
 	}
-
 }
 Export-ModuleMember -Function Get-WindowsInstallerSessionProperty
