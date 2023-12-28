@@ -16,6 +16,7 @@ Task Default -depends Test
 
 Task Init {
 	Set-Location $ProjectRoot
+	Set-BuildEnvironment
 	"Build System Details:"
 	Get-Item ENV:BH*
 }
@@ -48,40 +49,43 @@ Task Test -depends Init {
 	} else {
 		Write-Output "There were $($errors.Count) errors and $($warnings.Count) warnings total."
 	}
-
 }
 
 Task Build -depends Test {
 	Write-Output "Updating Module Manifest:"
 
 	# FunctionsToExport, AliasesToExport; from BuildHelpers
-	Write-Output "`Functions"
+	Write-Output "-Functions"
 	Set-ModuleFunction
-	Write-Output "`Aliases"
+	Write-Output "-Aliases"
 	Set-ModuleAlias
 
 	# Prerelease
-	Write-Output "`tPrerelease Metadata"
-	If ($env:BHBranchName -eq 'release') {
+	If ($env:BHBranchName -eq 'main') {
+		Write-Output "-Release Metadata"
 		# Remove "Prerelease" from Manifest
 		Set-Content -Path $env:BHPSModuleManifest -Value (Get-Content -Path $env:BHPSModuleManifest | Select-String -Pattern 'Prerelease' -NotMatch)
 	} else {
+		Write-Output "-Prerelease Metadata"
 		# Add/Update Prerelease Version
 		Update-Metadata -Path $env:BHPSModuleManifest -PropertyName Prerelease -Value "PRE$(($env:BHCommitHash).Substring(0,7))"
 	}
 
 	# Build Number from CI
-	Write-Output "`tVersion Build"
 	[Version] $Ver = Get-Metadata -Path $env:BHPSModuleManifest -PropertyName 'ModuleVersion'
 	Update-Metadata -Path $env:BHPSModuleManifest -PropertyName 'ModuleVersion' -Value (@($Ver.Major, $Ver.Minor, $Env:BHBuildNumber) -join '.')
+	Write-Output ("-Version {0}" -f $Ver.ToString())
 }
 
-Task Deploy -depends Build {
-	$Params = @{
-		Path    = "$ProjectRoot"
-		Force   = $true
-		Recurse = $false # We keep psdeploy artifacts, avoid deploying those : )
+Task Publish -depends Build {
+	$publishParams = @{
+		Path        = $env:BHPSModulePath
+		NuGetApiKey = $env:NuGetApiKey
 	}
-	Write-Output "Invoking PSDeploy"
-	Invoke-PSDeploy @Verbose @Params
+
+	if ($Repository) {
+		$publishParams['Repository'] = $Repository
+	}
+
+	Publish-Module @publishParams
 }

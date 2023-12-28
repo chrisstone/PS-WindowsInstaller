@@ -30,7 +30,7 @@
 	Copyright         = '(c) 2023 Christopher T. Stone. All rights reserved.'
 
 	# Description of the functionality provided by this module
-	# Description = ''
+	Description = 'PowerShell Module to wrap the WindowInstaller Objects, Methods, and Properties'
 
 	# Minimum version of the Windows PowerShell engine required by this module
 	# PowerShellVersion = ''

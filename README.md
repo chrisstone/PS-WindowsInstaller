@@ -1,6 +1,6 @@
 # PS-WindowsInstaller
 
-PowerShell Module to expose WindowInstaller Objects, Methods, and Properties
+PowerShell Module to wrap the WindowInstaller Objects, Methods, and Properties
 
 https://learn.microsoft.com/en-us/windows/win32/msi/windows-installer-reference
 
