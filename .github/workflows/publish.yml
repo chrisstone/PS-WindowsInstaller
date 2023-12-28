@@ -1,0 +1,16 @@
+name: Publish PowerShell Module
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  publish-PSG:
+    name: Publish Release to PowerShell Gallery
+    runs-on: windows-latest
+    steps:
+      - name: Publish Module to PowerShell Gallery
+        uses: pcgeek86/publish-powershell-module-action@v20
+        id: publish-module
+        with:
+          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
