@@ -1,13 +1,12 @@
 on:
   push:
-  # Sequence of patterns matched against refs/tags
     tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      - 'v*'
 
 name: Create Release
 
 jobs:
-  build:
+  Release:
     name: Create Release
     runs-on: ubuntu-latest
     steps:
@@ -15,3 +14,22 @@ jobs:
         uses: actions/checkout@v2
       - name: Create Release
         uses: ncipollo/release-action@v1
+
+  Publish:
+    name: PSAke Publish Task
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Install Dependencies from PSGallery
+        shell: pwsh
+        run: |
+            Set-PSRepository PSGallery -InstallationPolicy Trusted
+            Install-Module Psake
+            Install-Module BuildHelpers
+      - name: Invoke PSAke
+        shell: pwsh
+        env:
+          mNuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+          GITHUB_RUNNUMBER: ${{ github.run_number }}
+        run: Invoke-psake -taskList 'Publish'
