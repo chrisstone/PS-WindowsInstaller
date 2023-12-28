@@ -3,7 +3,7 @@ on:
     tags:
       - 'v*'
 
-name: Create Release
+name: Create Release & Publish
 
 jobs:
   Release:
@@ -30,6 +30,6 @@ jobs:
       - name: Invoke PSAke
         shell: pwsh
         env:
-          mNuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
           GITHUB_RUNNUMBER: ${{ github.run_number }}
         run: Invoke-psake -taskList 'Publish'
