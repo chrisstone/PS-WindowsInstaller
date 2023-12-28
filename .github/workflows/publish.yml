@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-psake:
-    name: PSAke Build Process
+    name: PSAke Publish Task
     runs-on: windows-latest
     steps:
       - name: Check out repository code
@@ -20,5 +20,6 @@ jobs:
       - name: Invoke PSAke
         shell: pwsh
         env:
-          NuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+          mNuGetApiKey: ${{ secrets.PS_GALLERY_KEY }}
+          GITHUB_RUNNUMBER: ${{ github.run_number }}
         run: Invoke-psake -taskList 'Publish'

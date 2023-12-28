@@ -67,13 +67,23 @@ Task Build -depends Test {
 		Set-Content -Path $env:BHPSModuleManifest -Value (Get-Content -Path $env:BHPSModuleManifest | Select-String -Pattern 'Prerelease' -NotMatch)
 	} else {
 		Write-Output "-Prerelease Metadata"
-		# Add/Update Prerelease Version
+		# Update Prerelease Version
 		Update-Metadata -Path $env:BHPSModuleManifest -PropertyName Prerelease -Value "PRE$(($env:BHCommitHash).Substring(0,7))"
 	}
 
 	# Build Number from CI
-	[Version] $Ver = Get-Metadata -Path $env:BHPSModuleManifest -PropertyName 'ModuleVersion'
-	Update-Metadata -Path $env:BHPSModuleManifest -PropertyName 'ModuleVersion' -Value (@($Ver.Major, $Ver.Minor, $Env:BHBuildNumber) -join '.')
+	$pattern = '(\d+(\.\d+)+)?$'
+	if ($env:BHBranchName -match $pattern) {
+		[Version] $Ver = $Matches[0]
+	} else {
+		[Version] $Ver = Get-Metadata -Path $env:BHPSModuleManifest -PropertyName 'ModuleVersion'
+	}
+	if ($env:GITHUB_RUNNUMBER) {
+		$Build = $env:GITHUB_RUNNUMBER
+	} else {
+		$Build = $Env:BHBuildNumber
+	}
+	Update-Metadata -Path $env:BHPSModuleManifest -PropertyName 'ModuleVersion' -Value (@($Ver.Major, $Ver.Minor, $Build) -join '.')
 	Write-Output ("-Version {0}" -f $Ver.ToString())
 }
 
