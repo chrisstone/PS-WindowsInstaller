@@ -61,7 +61,7 @@ Task Build -depends Test {
 	Set-ModuleAlias
 
 	# Prerelease
-	If ($env:BHBranchName -eq 'main') {
+	If ($env:BHBranchName -match 'tags') {
 		Write-Output "-Release Metadata"
 		# Remove "Prerelease" from Manifest
 		Set-Content -Path $env:BHPSModuleManifest -Value (Get-Content -Path $env:BHPSModuleManifest | Select-String -Pattern 'Prerelease' -NotMatch)

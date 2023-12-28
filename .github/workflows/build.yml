@@ -6,7 +6,7 @@ jobs:
     name: PSAke Build Process
     runs-on: windows-latest
     steps:
-      - name: Check out repository code
+      - name: Checkout code
         uses: actions/checkout@v3
       - name: Install Dependencies from PSGallery
         shell: pwsh
