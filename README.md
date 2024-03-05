@@ -27,7 +27,7 @@ $Return = Invoke-WindowsInstallerSessionAction -Session $PackageSession -Action 
 ```powershell
 $Installer = New-WindowsInstallerInstaller
 
-Set-WindowsInstallerInstallerLog -LogMode '+'  -LogFile 'C:\Windows\Temp\My.Log' -Installer $Installer
+Set-WindowsInstallerInstallerLog -LogMode '+'  -LogFile 'C:\Temp\My.Log' -Installer $Installer
 Set-WindowsInstallerInstallerUILevel -UILevel 2 -Installer $Installer
 
 $AllProducts = Get-WindowsInstallerInstallerProduct |% { Get-WindowsInstallerInstallerProductInfo $_ }
@@ -37,3 +37,4 @@ $BadProducts.ProductCode |%{
 	Write-Host ('Uninstalling {0}' -f $_)
 	Set-WindowsInstallerInstallerProduct -ProductCode $_ -InstallState msiInstallStateAbsent -Installer $Installer
 }
+```

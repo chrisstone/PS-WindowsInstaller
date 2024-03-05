@@ -34,8 +34,12 @@ function Remove-WindowsInstallerObject {
 	)
 
 	Process {
-		if ($PSCmdlet.ShouldProcess("WindowsInstaller", "Remove COM object")) {
-			[System.Runtime.Interopservices.Marshal]::ReleaseComObject($InputObject) | Out-Null
+		try {
+			if ($PSCmdlet.ShouldProcess("WindowsInstaller", "Remove COM object")) {
+				[System.Runtime.Interopservices.Marshal]::ReleaseComObject($InputObject) | Out-Null
+			}
+		} catch {
+			Write-Verbose $_
 		}
 	}
 }

@@ -1,7 +1,7 @@
 name: Build PowerShell Module on Windows
 on:
   push:
-    branches: [main]
+    branches: [main, devel]
 
 jobs:
   build-psake:

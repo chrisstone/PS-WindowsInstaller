@@ -1,14 +1,3 @@
-# enum MsiMessageStatus {
-# 	msiMessageStatusError = -1
-# 	msiMessageStatusNone = 0
-# 	msiMessageStatusOk = 1
-# 	msiMessageStatusCancel = 2
-# 	msiMessageStatusAbort = 3
-# 	msiMessageStatusRetry = 4
-# 	msiMessageStatusIgnore = 5
-# 	msiMessageStatusYes = 6
-# 	msiMessageStatusNo = 7
-# }
 <#
 .SYNOPSIS
    Invokes an action on a Windows Installer Session.
@@ -26,14 +15,14 @@
    Invoke-WindowsInstallerSessionAction -Session $Session -Action "INSTALL"
 
 .OUTPUTS
-	[Int32] MsiMessageStatus
+	[MsiMessageStatus] MsiMessageStatus
 
 .NOTES
-	1 = Success, 3 = Failure
+	1 = Success, 3 = Failure typically
 #>
 function Invoke-WindowsInstallerSessionAction {
 	[CmdletBinding()]
-	[OutputType([Int32])]
+	[OutputType([MsiMessageStatus])]
 	param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
 		[System.__ComObject] $Session,
