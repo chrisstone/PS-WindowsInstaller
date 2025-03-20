@@ -16,7 +16,7 @@ function Set-WindowsInstallerInstallerUILevel {
 	param (
 		[Parameter(Mandatory = $true)]
 		[ValidateRange(0, 255)]
-		[msiUILevel] $UILevel,
+		[MSI.UILevel] $UILevel,
 
 		[Parameter(Mandatory = $true)]
 		[System.__ComObject] $Installer

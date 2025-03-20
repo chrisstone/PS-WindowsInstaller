@@ -11,11 +11,11 @@
 .PARAMETER PackagePath
    The full path to the package to be installed.
 
-.PARAMETER CommandLineOptions
+.PARAMETER PropertyValues
    Options for the command line for the installation.
 
 .EXAMPLE
-   Install-WindowsInstallerInstallerProduct -Installer $Installer -PackagePath "C:\Path\To\YourProduct.msi" -CommandLineOptions "OPTION1=VALUE1 OPTION2=VALUE2"
+   Install-WindowsInstallerInstallerProduct -Installer $Installer -PackagePath "C:\Path\To\YourProduct.msi" -PropertyValues "OPTION1=VALUE1 OPTION2=VALUE2"
 
 .NOTES
    https://learn.microsoft.com/en-us/windows/win32/msi/action
@@ -32,11 +32,11 @@ function Install-WindowsInstallerInstallerProduct {
 		[string]				$PackagePath,
 
 		[Parameter(Mandatory = $false)]
-		[string[]]				$CommandLineOptions = $null
+		[string[]]				$PropertyValues = $null
 	)
 
 	Process {
-		$Installer.GetType().InvokeMember('InstallProduct', [System.Reflection.BindingFlags]::InvokeMethod, $null, $Installer, @($PackagePath, $CommandLineOptions))
+		$Installer.GetType().InvokeMember('InstallProduct', [System.Reflection.BindingFlags]::InvokeMethod, $null, $Installer, @($PackagePath, $PropertyValues))
 	}
 
 	End {

@@ -34,7 +34,7 @@ function Set-WindowsInstallerInstallerProduct {
 
 		[Parameter(Mandatory = $true)]
 		[ValidateRange(1, 5)]
-		[MsiInstallState]		$InstallState,
+		[MSI.InstallState]		$InstallState,
 
 		[Parameter(Mandatory = $false)]
 		[System.__ComObject]	$Installer = (New-Object -ComObject WindowsInstaller.Installer),

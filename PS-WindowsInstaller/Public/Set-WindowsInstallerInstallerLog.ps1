@@ -22,7 +22,7 @@ function Set-WindowsInstallerInstallerLog {
 	[CmdletBinding(SupportsShouldProcess = $true)]
 	param (
 		[Parameter(Mandatory = $true)]
-		[ValidateScript({ $_ -match '^(?![+!]$)[lwefarucmvp+!xo]+$' })]
+		[ValidateScript({ $_ -match '^(?![+!]$)[iwefarucmvp\+\!xo]+$' })]
 		[string] $LogMode,
 
 		[Parameter(Mandatory = $true)]

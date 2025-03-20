@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout
+        uses: actions/checkout@v4
       - name: Create Release
         uses: ncipollo/release-action@v1
 
@@ -20,7 +20,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Check out repository code
-        uses: actions/checkout
+        uses: actions/checkout@v4
       - name: Install Dependencies from PSGallery
         shell: pwsh
         run: |

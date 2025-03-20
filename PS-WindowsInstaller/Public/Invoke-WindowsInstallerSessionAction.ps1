@@ -15,14 +15,14 @@
    Invoke-WindowsInstallerSessionAction -Session $Session -Action "INSTALL"
 
 .OUTPUTS
-	[MsiMessageStatus] MsiMessageStatus
+	[MSI.MsiMessageStatus] MsiMessageStatus
 
 .NOTES
 	1 = Success, 3 = Failure typically
 #>
 function Invoke-WindowsInstallerSessionAction {
 	[CmdletBinding()]
-	[OutputType([MsiMessageStatus])]
+	[OutputType([MSI.MsiMessageStatus])]
 	param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
 		[System.__ComObject] $Session,
